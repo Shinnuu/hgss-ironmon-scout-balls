@@ -16,12 +16,23 @@ WHAT IT DOES
 ----------------------------------------------------------------------------
 SETUP  (do this once)
 ----------------------------------------------------------------------------
-  1. Put these three files into your Ironmon Tracker folder -- the folder
-     that contains "ironmon_tracker\QuickLoader.lua":
+  1. Put these three files into your Ironmon Tracker folder -- the SAME folder
+     that has "Ironmon-Tracker.lua" (the file you load in BizHawk):
          scout_patcher.exe
          install_scout_balls.bat
          uninstall_scout_balls.bat
+
+     >> Put them in that TOP tracker folder -- the one that ALSO contains the
+        "ironmon_tracker" sub-folder. Do NOT put them inside the
+        "ironmon_tracker" sub-folder. <<
+
   2. Double-click  install_scout_balls.bat.
+     It should print:  Installed scout-ball hook into: ...\ironmon_tracker\QuickLoader.lua
+     (If it says it could NOT find QuickLoader.lua, the files are in the wrong
+     folder -- move them next to Ironmon-Tracker.lua and run it again.)
+
+  3. In BizHawk, reload the tracker (restart the Lua script, or restart BizHawk)
+     so the change takes effect.
 
   Done. No Python or other installs are required.
 

@@ -204,16 +204,23 @@ ANCHOR     = 'MiscUtils.runExecuteCommand(command, "RomGenerationErrorLog.txt")'
 
 def find_quickloader(hint=None):
     cands = []
-    if hint:
-        cands += [hint, os.path.join(hint, "ironmon_tracker", "QuickLoader.lua"),
-                  os.path.join(hint, "QuickLoader.lua")]
-    cwd = os.getcwd()
-    cands += [os.path.join(cwd, "ironmon_tracker", "QuickLoader.lua"),
-              os.path.join(cwd, "QuickLoader.lua")]
+    def add(base):
+        if base:
+            base = base.strip().rstrip('"')        # tolerate batch %~dp0 trailing-backslash mangling
+            cands.extend([os.path.join(base, "ironmon_tracker", "QuickLoader.lua"),
+                          os.path.join(base, "QuickLoader.lua")])
+    # 1. the exe's OWN folder — most robust: the installer is placed in the Tracker folder, so this
+    #    works regardless of working directory, batch quoting, or "Run as administrator".
+    if getattr(sys, "frozen", False):
+        add(os.path.dirname(os.path.abspath(sys.executable)))
+    add(hint)                                       # 2. explicit hint (or its own dir)
+    if hint and os.path.isfile(hint.strip().rstrip('"')):
+        cands.insert(0, hint.strip().rstrip('"'))
+    add(os.getcwd())                                # 3. current working directory
     for c in cands:
         if c and os.path.isfile(c):
             return c
-    for root, _dirs, files in os.walk(cwd):        # last resort: search downward
+    for root, _dirs, files in os.walk(os.getcwd()):  # 4. last resort: search downward from CWD
         if "QuickLoader.lua" in files and os.path.basename(root) == "ironmon_tracker":
             return os.path.join(root, "QuickLoader.lua")
     return None
@@ -249,9 +256,11 @@ def install_hook(hint=None, remove=False):
         text = text[:eol + 1] + _hook_block() + "\n" + text[eol + 1:]
     open(ql + ".scoutbak", "w", encoding="utf-8").write(open(ql, encoding="utf-8").read())
     open(ql, "w", encoding="utf-8").write(text)
-    print(("Uninstalled hook from " if remove else "Installed scout-ball hook into ") + ql)
+    print(("Uninstalled hook from:\n  " if remove else "Installed scout-ball hook into:\n  ") + ql)
     if not remove:
-        print("New runs in the Tracker will now auto-patch scout balls.")
+        print("Patcher: " + (sys.executable if getattr(sys, "frozen", False) else os.path.abspath(__file__)))
+        print("Done. New runs in the Tracker will now auto-patch scout balls.")
+        print("(Reload the tracker in BizHawk so the change takes effect.)")
 
 def main():
     a = sys.argv[1:]
