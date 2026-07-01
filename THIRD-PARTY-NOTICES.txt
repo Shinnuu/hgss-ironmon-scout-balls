@@ -1,0 +1,41 @@
+============================================================================
+ IronMON Scout Balls (scout_patcher) — Licensing & Third-Party Notices
+============================================================================
+
+scout_patcher is free/open-source software licensed under the
+GNU General Public License, version 3 or later (GPLv3+).
+The full license text is in LICENSE.txt.
+
+The complete corresponding source code is included in the "src" folder
+(and is what the scout_patcher.exe was built from).
+
+----------------------------------------------------------------------------
+Bundled third-party components
+----------------------------------------------------------------------------
+
+* ndspy  (Nintendo DS file-format library)
+    Copyright (C) RoadrunnerWMC
+    License: GNU GPL v3 or later
+    Source:  https://github.com/RoadrunnerWMC/ndspy
+    ndspy is statically bundled inside scout_patcher.exe; because it is GPLv3,
+    the whole scout_patcher tool is distributed under GPLv3 as well.
+
+* Python  (runtime, bundled by the freezer)
+    Copyright (C) Python Software Foundation
+    License: Python Software Foundation License (GPL-compatible, permissive)
+    Source:  https://www.python.org/
+
+* PyInstaller bootloader  (used to build the .exe)
+    License: GPLv2+ WITH the PyInstaller bootloader exception, which explicitly
+    permits packaging applications regardless of their license.
+    Source:  https://github.com/pyinstaller/pyinstaller
+
+Not bundled in the .exe (used only by developer/investigation scripts):
+    capstone (BSD-3-Clause) — https://github.com/capstone-engine/capstone
+
+----------------------------------------------------------------------------
+Reference material (NOT distributed with this tool)
+----------------------------------------------------------------------------
+    ROM byte formats and the message charmap were derived from the
+    pret/pokeheartgold decompilation (used as reference only).
+============================================================================

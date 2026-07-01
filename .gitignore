@@ -1,0 +1,28 @@
+# ROMs & saves — NEVER commit (copyright)
+*.nds
+*.gba
+*.sav
+*.dsv
+*.dst
+*.nds.log
+
+# Build artifacts / binaries
+*.exe
+build/
+dist/
+*.spec
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# External reference / tools (not part of this repo)
+refs/
+pokeheartgold/
+BizHawk*/
+desmume*/
+PokeRandoZX*/
+*Ironmon-Tracker*/
+out/
